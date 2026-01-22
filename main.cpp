@@ -10,6 +10,11 @@ int main()
     // Gravity (p/f)/f
     const int gravity{1};
 
+    // Textures
+    Texture2D scarfy = LoadTexture("textures/scarfy.png");
+    Rectangle scarfyRec;
+    Vector2 scarfyPos;
+
     // Rectangle Dimensions
     const int width{50};
     const int heigth{80};
