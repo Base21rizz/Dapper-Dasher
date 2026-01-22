@@ -88,6 +88,10 @@ int main()
 
     Texture2D background = LoadTexture("textures/far-buildings.png");
     float bgX{};
+    Texture2D midGround = LoadTexture("textures/back-buildings.png");
+    float mgX{};
+    Texture2D foreGround = LoadTexture("textures/foreground.png");
+    float fgX{};
 
     SetTargetFPS(60);
     while (!WindowShouldClose())
@@ -99,10 +103,23 @@ int main()
         BeginDrawing();
         ClearBackground(WHITE);
 
+        // Scroll Background
         bgX -= 20 * dT;
-        if (bgX <= -background.width / 2)
+        if (bgX <= -background.width * 2)
         {
             bgX = 0.0;
+        }
+        // Scroll Midground
+        mgX -= 40 * dT;
+        if (mgX <= -midGround.width * 2)
+        {
+            mgX = 0.0;
+        }
+        // Scroll Foreground
+        fgX -= 80 * dT;
+        if (fgX <= -foreGround.width * 2)
+        {
+            fgX = 0.0;
         }
 
         // Draw Background
@@ -110,6 +127,16 @@ int main()
         DrawTextureEx(background, bg1Pos, 0.0, 2.0, WHITE);
         Vector2 bg2Pos{bgX + background.width * 2, 0.0};
         DrawTextureEx(background, bg2Pos, 0.0, 2.0, WHITE);
+
+        Vector2 mg1Pos{mgX, 0.0};
+        DrawTextureEx(midGround, mg1Pos, 0.0, 2.0, WHITE);
+        Vector2 mg2Pos{mgX + midGround.width * 2, 0.0};
+        DrawTextureEx(midGround, mg2Pos, 0.0, 2.0, WHITE);
+
+        Vector2 fg1Pos{fgX, 0.0};
+        DrawTextureEx(foreGround, fg1Pos, 0.0, 2.0, WHITE);
+        Vector2 fg2Pos{fgX + foreGround.width * 2, 0.0};
+        DrawTextureEx(foreGround, fg2Pos, 0.0, 2.0, WHITE);
 
         // Game Logic Start
         // Perform Ground Check
@@ -169,5 +196,7 @@ int main()
     UnloadTexture(scarfy);
     UnloadTexture(nebula);
     UnloadTexture(background);
+    UnloadTexture(midGround);
+    UnloadTexture(foreGround);
     CloseWindow();
 }
