@@ -43,23 +43,6 @@ int main()
     // Nebula X velocity (Pixels/ Sec)
     int nebVel{-200};
 
-    /* Rectangle nebRec{0.0, 0.0, nebula.width / 8, nebula.height / 8};
-    Vector2 nebPos{windowWidth, windowHeight - nebRec.height};
-
-    Rectangle neb2Rec{0.0, 0.0, nebula.width / 8, nebula.height / 8};
-    Vector2 neb2Pos{windowWidth + 300, windowHeight - nebRec.height};
-
-    // Nebula Animation
-    int nebFrame{};
-    // Amount of time before we update the animation frame
-    const float nebUpdateTime(1.0 / 12.0);
-    float nebRunningTime{};
-
-    int neb2Frame{};
-    // Amount of time before we update the animation frame
-    const float neb2UpdateTime(1.0 / 16.0);
-    float neb2RunningTime{}; */
-
     // Scarfy Variables
     Texture2D scarfy = LoadTexture("textures/scarfy.png");
     AnimData scarfyData;
