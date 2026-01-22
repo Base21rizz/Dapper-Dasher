@@ -7,6 +7,8 @@ int main()
 
     // Initialize Window
     InitWindow(windowWidth, windowHeight, "Dapper-Dasher");
+    // Gravity (p/f)/f
+    const int gravity{1};
 
     // Rectangle Dimensions
     const int width{50};
@@ -23,10 +25,25 @@ int main()
         ClearBackground(WHITE);
 
         // Game Logic Start
+        // Perform Ground Check
+        if (posY >= windowHeight - heigth)
+        {
+            // Rectangle is on the ground
+            velocity = 0;
+        }
+        else
+        {
+            // Rectangle is in the Air
+            velocity += gravity;
+        }
+
         if (IsKeyPressed(KEY_SPACE))
         {
             velocity -= 10;
         }
+        // Apply gravity
+
+        // Update Position
         posY += velocity;
 
         DrawRectangle(windowWidth / 2, posY, width, heigth, BLUE);
