@@ -39,14 +39,14 @@ int main()
     windowsDimensions[1] = 380;
 
     // Initialize Window
-    InitWindow(windowsDimensions[0], windowsDimensions[1], "Dapper-Dasher");
+    InitWindow(windowsDimensions[0], windowsDimensions[1], "Dapper Dasher");
     // Gravity (pixels / sec ) / sec
     const int gravity{1'000};
 
     // Nebula Variable
     Texture2D nebula = LoadTexture("textures/12_nebula_spritesheet.png");
 
-    const int sizeOfnebulae{10};
+    const int sizeOfnebulae{3};
     AnimData nebulae[sizeOfnebulae]{};
 
     for (int i = 0; i < sizeOfnebulae; i++)
@@ -62,7 +62,7 @@ int main()
         nebulae[i].pos.x = windowsDimensions[0] + i * 300;
     };
 
-    float finishLine{nebulae[sizeOfnebulae].pos.x - 1};
+    float finishLine{nebulae[sizeOfnebulae - 1].pos.x + 160};
 
     // Nebula X velocity (Pixels/ Sec)
     int nebVel{-200};
@@ -201,15 +201,15 @@ int main()
             }
         }
 
-        // Update Animation frame for Scarfy
-        if (!isInAir)
-        {
-            scarfyData = updadteAnimData(scarfyData, dT, 5);
-        }
-
         if (collision)
         {
-            // lose
+            // Lose The Game
+            DrawText("Game Over!", windowsDimensions[0] / 4, windowsDimensions[1] / 2, 40, RED);
+        }
+        else if (scarfyData.pos.x >= finishLine)
+        {
+            // Win The Game
+            DrawText("You Win!", windowsDimensions[0] / 4, windowsDimensions[1] / 2, 40, BLUE);
         }
         else
         {
@@ -222,7 +222,11 @@ int main()
             // Draw Scarfy
             DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
         }
-
+        // Update Animation frame for Scarfy
+        if (!isInAir)
+        {
+            scarfyData = updadteAnimData(scarfyData, dT, 5);
+        }
         // Game Logic End
         // End Drawing
         EndDrawing();
