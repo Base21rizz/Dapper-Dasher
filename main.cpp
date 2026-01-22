@@ -9,6 +9,28 @@ struct AnimData
     float runningTime;
 };
 
+bool isOnground(AnimData data, int windowHeight)
+{
+    return data.pos.y >= windowHeight - data.rec.height;
+}
+
+AnimData updadteAnimData(AnimData data, float deltaTime, int maxFrame)
+{
+    // Update running time
+    data.runningTime += deltaTime;
+    if (data.runningTime >= data.updateTime)
+    {
+        data.runningTime = 0.0;
+        data.rec.x = data.frame * data.rec.width;
+        data.frame++;
+        if (data.frame > maxFrame)
+        {
+            data.frame = 0;
+        }
+    }
+    return data;
+}
+
 int main()
 {
     // Window Dimensions
@@ -76,7 +98,7 @@ int main()
 
         // Game Logic Start
         // Perform Ground Check
-        if (scarfyData.pos.y >= windowsDimensions[1] - scarfyData.rec.height)
+        if (isOnground(scarfyData, windowsDimensions[1]))
         {
             // Rectangle is on the ground
             isInAir = false;
@@ -107,32 +129,13 @@ int main()
         for (int i = 0; i < sizeOfnebulae; i++)
         {
             // Update Animation frame for Nebula
-            nebulae[i].runningTime += dT;
-            if (nebulae[i].runningTime >= nebulae[i].updateTime)
-            {
-                nebulae[i].runningTime = 0.0;
-                // update animation frame
-                nebulae[i].rec.x = nebulae[i].frame * nebulae[i].rec.width;
-                nebulae[i].frame++;
-                if (nebulae[i].frame > 7)
-                {
-                    nebulae[i].frame = 0;
-                }
-            }
+            nebulae[i] = updadteAnimData(nebulae[i], dT, 7);
         }
 
         // Update Animation frame for Scarfy
-        scarfyData.runningTime += dT;
-        if (scarfyData.runningTime >= scarfyData.updateTime && !isInAir) // Slightly different from the tutorial but is better
+        if (!isInAir)
         {
-            scarfyData.runningTime = 0;
-            // update animation frame
-            scarfyData.rec.x = scarfyData.frame * scarfyData.rec.width;
-            scarfyData.frame++;
-            if (scarfyData.frame > 5)
-            {
-                scarfyData.frame = 0;
-            }
+            scarfyData = updadteAnimData(scarfyData, dT, 5);
         }
 
         // Draw Nebula
