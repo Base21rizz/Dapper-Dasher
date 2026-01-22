@@ -62,6 +62,8 @@ int main()
         nebulae[i].pos.x = windowsDimensions[0] + i * 300;
     };
 
+    float finishLine{nebulae[sizeOfnebulae].pos.x - 1};
+
     // Nebula X velocity (Pixels/ Sec)
     int nebVel{-200};
 
@@ -92,6 +94,9 @@ int main()
     float mgX{};
     Texture2D foreGround = LoadTexture("textures/foreground.png");
     float fgX{};
+
+    // Check for collision variable
+    bool collision{false};
 
     SetTargetFPS(60);
     while (!WindowShouldClose())
@@ -165,6 +170,9 @@ int main()
             nebulae[i].pos.x += nebVel * dT;
         }
 
+        // Update finishLine
+        finishLine += nebVel * dT;
+
         // Update Scarfy Position
         scarfyData.pos.y += velocity * dT;
 
@@ -174,20 +182,46 @@ int main()
             nebulae[i] = updadteAnimData(nebulae[i], dT, 7);
         }
 
+        for (AnimData nebula : nebulae)
+        {
+            float pad{50};
+            Rectangle nebRec{
+                nebula.pos.x + pad,
+                nebula.pos.y + pad,
+                nebula.rec.width - 2 * pad,
+                nebula.rec.height - 2 * pad};
+            Rectangle scarfyRec{
+                scarfyData.pos.x,
+                scarfyData.pos.y,
+                scarfyData.rec.width,
+                scarfyData.rec.height};
+            if (CheckCollisionRecs(nebRec, scarfyRec))
+            {
+                collision = true;
+            }
+        }
+
         // Update Animation frame for Scarfy
         if (!isInAir)
         {
             scarfyData = updadteAnimData(scarfyData, dT, 5);
         }
 
-        // Draw Nebula
-        for (int i = 0; i < sizeOfnebulae; i++)
+        if (collision)
         {
-            DrawTextureRec(nebula, nebulae[i].rec, nebulae[i].pos, WHITE);
+            // lose
         }
+        else
+        {
+            // Draw Nebula
+            for (int i = 0; i < sizeOfnebulae; i++)
+            {
+                DrawTextureRec(nebula, nebulae[i].rec, nebulae[i].pos, WHITE);
+            }
 
-        // Draw Scarfy
-        DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
+            // Draw Scarfy
+            DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
+        }
 
         // Game Logic End
         // End Drawing
