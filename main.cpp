@@ -24,20 +24,20 @@ int main()
     // Nebula Variable
     Texture2D nebula = LoadTexture("textures/12_nebula_spritesheet.png");
 
-    const int sizeOfNebulee{10};
-    AnimData nebulee[sizeOfNebulee]{};
+    const int sizeOfnebulae{10};
+    AnimData nebulae[sizeOfnebulae]{};
 
-    for (int i = 0; i < sizeOfNebulee; i++)
+    for (int i = 0; i < sizeOfnebulae; i++)
     {
-        nebulee[i].rec.x = 0.0;
-        nebulee[i].rec.y = 0.0;
-        nebulee[i].rec.width = nebula.width / 8;
-        nebulee[i].rec.height = nebula.height / 8;
-        nebulee[i].pos.y = windowsDimensions[1] - nebula.height / 8;
-        nebulee[i].frame = 0;
-        nebulee[i].runningTime = 0.0;
-        nebulee[i].updateTime = 1.0 / 16.0;
-        nebulee[i].pos.x = windowsDimensions[0] + i * 300;
+        nebulae[i].rec.x = 0.0;
+        nebulae[i].rec.y = 0.0;
+        nebulae[i].rec.width = nebula.width / 8;
+        nebulae[i].rec.height = nebula.height / 8;
+        nebulae[i].pos.y = windowsDimensions[1] - nebula.height / 8;
+        nebulae[i].frame = 0;
+        nebulae[i].runningTime = 0.0;
+        nebulae[i].updateTime = 1.0 / 16.0;
+        nebulae[i].pos.x = windowsDimensions[0] + i * 300;
     };
 
     // Nebula X velocity (Pixels/ Sec)
@@ -95,28 +95,28 @@ int main()
             velocity += jumpVel;
         }
 
-        for (int i = 0; i < sizeOfNebulee; i++)
+        for (int i = 0; i < sizeOfnebulae; i++)
         {
             // Update Nebula Position
-            nebulee[i].pos.x += nebVel * dT;
+            nebulae[i].pos.x += nebVel * dT;
         }
 
         // Update Scarfy Position
         scarfyData.pos.y += velocity * dT;
 
-        for (int i = 0; i < sizeOfNebulee; i++)
+        for (int i = 0; i < sizeOfnebulae; i++)
         {
             // Update Animation frame for Nebula
-            nebulee[i].runningTime += dT;
-            if (nebulee[i].runningTime >= nebulee[i].updateTime)
+            nebulae[i].runningTime += dT;
+            if (nebulae[i].runningTime >= nebulae[i].updateTime)
             {
-                nebulee[i].runningTime = 0.0;
+                nebulae[i].runningTime = 0.0;
                 // update animation frame
-                nebulee[i].rec.x = nebulee[i].frame * nebulee[i].rec.width;
-                nebulee[i].frame++;
-                if (nebulee[i].frame > 7)
+                nebulae[i].rec.x = nebulae[i].frame * nebulae[i].rec.width;
+                nebulae[i].frame++;
+                if (nebulae[i].frame > 7)
                 {
-                    nebulee[i].frame = 0;
+                    nebulae[i].frame = 0;
                 }
             }
         }
@@ -136,9 +136,9 @@ int main()
         }
 
         // Draw Nebula
-        for (int i = 0; i < sizeOfNebulee; i++)
+        for (int i = 0; i < sizeOfnebulae; i++)
         {
-            DrawTextureRec(nebula, nebulee[i].rec, nebulee[i].pos, WHITE);
+            DrawTextureRec(nebula, nebulae[i].rec, nebulae[i].pos, WHITE);
         }
 
         // Draw Scarfy
